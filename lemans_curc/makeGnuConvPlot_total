@@ -1,0 +1,11 @@
+#!/curc/sw/gnuplot/5.4.1/bin/gnuplot
+
+# outputs plot to terminal of L2 convergence
+set term dumb size 125 50
+set logscale y
+set logscale y2
+set ytics nomirror
+set y2tics 
+plot 'tecplot_convergence.dat' u 1:4 title 'L2 Residual - Left' axes x1y1, \
+'tecplot_convergence.dat' u 1:2 title 'Max Residual - Left' axes x1y1, \
+'tecplot_convergence.dat' u 1:6 title 'CFL - Right' axes x1y2
