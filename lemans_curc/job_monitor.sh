@@ -2,7 +2,7 @@
 source ~/.bashrc
 
 # find pwd of this script
-SCRIPT_DIR=$(pwd)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # find job IDs from slurm
 JOB_IDS=$(squeue -h -u miwa6095 -o "%i")
