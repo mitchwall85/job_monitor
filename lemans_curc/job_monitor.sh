@@ -7,9 +7,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # find job IDs from slurm
 JOB_IDS=$(squeue -h -u miwa6095 -o "%i")
 
+# loop over running jobs and plot
 for JOB_ID in $JOB_IDS; do
 
-  echo '############################################'
   echo '############################################'
   echo "jobid: $JOB_ID"
 
@@ -32,7 +32,6 @@ for JOB_ID in $JOB_IDS; do
     echo
     echo "No Convergence file in $WORKINGDIR"
   fi
-
 
 done
 
