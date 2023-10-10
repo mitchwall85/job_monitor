@@ -1,11 +1,19 @@
 #!/bin/bash
-source ~/.bashrc
+source ~/.bashrc > /dev/null 2>&1
+echo '***Running Job Monitor for LeMANS/MPC Jobs***'
 
 # find pwd of this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # find job IDs from slurm
 JOB_IDS=$(squeue -h -u miwa6095 -o "%i")
+
+# print number of jobs running
+echo 'Current Job IDs'
+for JOB_ID in $JOB_IDS; do
+  echo $JOB_ID
+done
+echo
 
 # loop over running jobs and plot
 for JOB_ID in $JOB_IDS; do
@@ -35,5 +43,7 @@ for JOB_ID in $JOB_IDS; do
 
 done
 
-
+echo
+echo '############################################'
+echo "***Finished Job Monitor for LeMANS/MPC***"
 
