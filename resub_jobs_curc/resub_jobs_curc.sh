@@ -3,6 +3,7 @@
 # 1: Name of Slurm job, defined by user in --job-name flag
 # 2: Path to where the job and the submission script exist
 
+source ~/.bashrc
 source /etc/profile # makes squeue work with options
 module load slurm/blanca
 
@@ -21,10 +22,13 @@ echo "Previous Job ID: $previous_job_id"
 
 # Check if the previous job is still running or pending
 if [ -n "$previous_job_id" ]; then
-  echo "Job is still running or pending (Job ID: $previous_job_id)"
+  current_time=$(date +"%T")
+  echo "Job is still running or pending (Job ID: $previous_job_id) at time: $current_time"
 else
   # Resubmit the job preemptable again
-  sbatch "$job_dir/submitBlanca.sh" 
-  echo "Job resubmitted with extended time limit at: $current_time"
+  cd $job_dir
+  sbatch --export=NONE submitBlanca.sh
+  echo "sbatch --export=NONE submitBlanca.sh"
+  echo "Job resubmitted at: $current_time"
 fi
 
