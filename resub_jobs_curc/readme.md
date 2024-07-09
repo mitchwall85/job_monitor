@@ -1,3 +1,4 @@
+# Setting Up the Autoresubmission
 This script is for resubmitting jobs automatically after they are canceled. This is most easily configured using cron to run the script periodically to check if the job ended. `resub_jobs_curc.sh` must be executable.
  
 To set up:
@@ -11,6 +12,6 @@ To set up:
 5) Check the log file to ensure that the script is working.
 
 
-Using cron:
+# Using cron
 Each line in the crontab file is a command that will be run at an interval specified by the five characters preceding the command. Find details on formatting here:
 https://acquia.my.site.com/s/article/360004224494-Cron-time-string-format
