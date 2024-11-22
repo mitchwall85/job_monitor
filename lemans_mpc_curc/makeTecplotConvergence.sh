@@ -19,10 +19,8 @@ fi
 # -- Copy, will clobber
 cp $infile $outfile
 
-# -- Add variables line at top
-sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' $outfile
-
 if [ $infile = "convergence.dat" ]; then
+  sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' $outfile
   # -- Find and replace each text that exists in all lines with tabs
   echo "Using LeMANS Convergence File"
   sed -i'' 's/ITER= //g' $outfile
@@ -34,11 +32,24 @@ if [ $infile = "convergence.dat" ]; then
   sed -i'' 's/time=//g' $outfile
   sed -i'' 's/ablw=//g' $outfile
 
-elif [ $infile = "convergence.plt" ]; then
-  echo "Using MPC Convergence File"
-  sed -i 's/\t/ /g' $outfile
+  makeGnuConvPlot_lm_mpc
 
-else
-  echo "Unsupported Convergence File Provided"
+elif [ $infile = "convergence.plt" ]; then
+ 
+  if head -n 1 "$infile" | grep -q '^V'; then # monaco convergence files should start like this
+    echo "Using Monaco Convergence File"
+    # If so, delete the second line from the input file
+    if sed -n '2p' "$infile" | grep -q '^Z'; then
+      sed -i '2d' "$infile"
+    fi
+    makeGnuConvPlot_monaco
+  elif head -n 1 "$infile" | grep -q '^1'; then # mpc files should start like this
+    sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' $outfile
+    echo "Using MPC Convergence File"
+    sed -i 's/\t/ /g' $outfile
+    makeGnuConvPlot_lm_mpc
+  else
+    echo "Unsupported Convergence File Provided"
+  fi
 
 fi

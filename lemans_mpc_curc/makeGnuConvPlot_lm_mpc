@@ -1,4 +1,4 @@
-#!/curc/sw/gnuplot/5.4.1/bin/gnuplot
+#!/curc/sw/install/gnuplot/5.4.3/bin/gnuplot
 
 # outputs plot to terminal of L2 convergence
 set term dumb size 125 50
