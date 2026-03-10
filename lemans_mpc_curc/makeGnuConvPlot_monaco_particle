@@ -1,0 +1,12 @@
+#!/curc/sw/install/gnuplot/5.4.3/bin/gnuplot
+
+# outputs plot to terminal of L2 convergence
+set term dumb size 125 50
+set logscale y
+set ytics nomirror
+
+# set axis labels to scientific notation
+set format y "10^{%L}"
+
+# plot L2, max, and CFL
+plot 'tecplot_convergence.dat' u 1:2 title '|--Particles-----Left---|' axes x1y1 pt "P"

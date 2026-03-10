@@ -42,7 +42,10 @@ elif [ $infile = "convergence.plt" ]; then
     if sed -n '2p' "$infile" | grep -q '^Z'; then
       sed -i '2d' "$infile"
     fi
+    makeGnuConvPlot_monaco_collision
+    makeGnuConvPlot_monaco_particle
     makeGnuConvPlot_monaco
+
   elif head -n 1 "$infile" | grep -q '^1'; then # mpc files should start like this
     sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' $outfile
     echo "Using MPC Convergence File"
