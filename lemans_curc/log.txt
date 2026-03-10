@@ -1,0 +1,19 @@
+Agent pid 5366
+AIT_slotted_phi00_03_v1.cas
+chemistry.dat
+intel
+lemans_old
+local
+opt
+python
+rc_files
+README.mdwn
+src
+submitBlanca.sh~
+submitBlanca.sv~
+submitBlanca.sw~
+submitBlanca.sx~
+submitBlanca.sy~
+submitBlanca.sz~
+test.txt
+xclip_tmp
