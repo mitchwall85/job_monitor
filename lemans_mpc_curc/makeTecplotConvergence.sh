@@ -7,17 +7,25 @@ set -euo pipefail
 infile="convergence.dat"
 outfile="tecplot_convergence.dat"
 
-# check if MPC or LeMANS format files work
-if [[ ! -f "$infile" ]]; then
-    infile="convergence.plt"
-    if [[ ! -f "$infile" ]]; then
-        infile="convergence_part.plt"  # for the case of a MPC-PART case
-        if [[ ! -f "$infile" ]]; then
-            printf 'No file %s found, error\n' "$infile"
-            exit 1
-        fi
+infile=""
+
+# *.dat: lemans 
+# *.plt: Monaco
+# *_cont.plt: MPC-CONT
+# *_part.plt: MPC-PART
+
+for f in convergence.dat convergence.plt convergence_cont.plt convergence_part.plt; do
+    if [[ -f "$f" ]]; then
+        infile="$f"
+        break
     fi
+done
+
+if [[ -z "$infile" ]]; then
+    echo "No convergence file found"
+    exit 1
 fi
+
 
 echo "Input file: $infile"
 echo "Output file: $outfile"
@@ -77,6 +85,14 @@ elif [[ "$infile" == "convergence_part.plt" ]]; then
     makeGnuConvPlot_monaco_collision
     makeGnuConvPlot_monaco_particle
     makeGnuConvPlot_monaco
+
+  elif [[ "$infile" == "convergence_cont.plt" ]]; then
+      echo "Using MPC Convergence File"
+
+        sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' "$outfile"
+        sed -i'' 's/\t/ /g' "$outfile"
+
+        makeGnuConvPlot_lm_mpc
 
 else
     echo "Unsupported Convergence File Provided"
