@@ -82,12 +82,12 @@ elif [[ "$infile" == "convergence_part.plt" ]]; then
         sed -i'' '2d' "$outfile"
     fi
 
-    makeGnuConvPlot_monaco_collision
-    makeGnuConvPlot_monaco_particle
+    #makeGnuConvPlot_monaco_collision
+    #makeGnuConvPlot_monaco_particle
     makeGnuConvPlot_monaco
 
   elif [[ "$infile" == "convergence_cont.plt" ]]; then
-      echo "Using MPC Convergence File"
+      echo "Using MPC-CONT Convergence File"
 
         sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' "$outfile"
         sed -i'' 's/\t/ /g' "$outfile"
