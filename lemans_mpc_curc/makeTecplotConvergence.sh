@@ -63,7 +63,7 @@ elif [[ "$infile" == "convergence.plt" ]]; then
         makeGnuConvPlot_monaco
 
     elif head -n 1 "$outfile" | grep -q '^1'; then
-        echo "Using MPC Convergence File"
+        echo "Using MPC-CONT Convergence File"
 
         sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' "$outfile"
         sed -i'' 's/\t/ /g' "$outfile"
