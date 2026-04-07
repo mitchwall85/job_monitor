@@ -48,8 +48,10 @@ process_file() {
         makeGnuConvPlot_lm_mpc
 
     elif [[ "$infile" == "convergence.plt" ]]; then
+        local first_line
+        first_line=$(awk 'NF{print; exit}' "$outfile")
 
-        if head -n 1 "$outfile" | grep -q '^V'; then
+        if printf '%s\n' "$first_line" | grep -q '^V'; then
             echo "Using Monaco Convergence File"
 
             # Delete zone line if present as second line
@@ -61,7 +63,7 @@ process_file() {
             makeGnuConvPlot_monaco_particle
             makeGnuConvPlot_monaco
 
-        elif head -n 1 "$outfile" | grep -q '^1'; then
+        elif printf '%s\n' "$first_line" | grep -Eq '^[[:space:]]*[0-9]+([[:space:]]+|$)'; then
             echo "Using MPC-CONT Convergence File"
 
             sed -i'' '1i VARIABLES = "iter" "Max Res" "Max Res Cell" "L2 Res" "dt" "CFL" "time" "ablw"' "$outfile"
